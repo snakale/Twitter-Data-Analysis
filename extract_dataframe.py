@@ -5,6 +5,16 @@ from textblob import TextBlob
 from os.path import exists
 from zipfile import ZipFile
 
+path_to_file = "./data/Economic_Twitter_Data.json"
+
+def extract_data_file():
+    
+    file_exists = exists(path_to_file)
+
+    if not file_exists:
+        with ZipFile('./data/Economic_Twitter_Data.zip', 'r') as zipfile:
+            zipfile.extractall('./data')
+
 def read_json(json_file: str)->list:
     """
     json file reader to open and read json files into a list
@@ -130,9 +140,8 @@ class TweetDfExtractor:
         for tweet in self.tweets_list:
             try:
                 currentMentions = tweet['entities']['user_mentions']
-                for m in currentMentions:
-                    mString = ', '.join( map(lambda x: x['name'], tweet['entities']['user_mentions']) )
-                    mentions.append(mString)
+                mString = ', '.join( map(lambda x: '@' + x['screen_name'], currentMentions) )
+                mentions.append(mString)
                     
             except KeyError:
                 mentions.append(None)
@@ -184,15 +193,9 @@ class TweetDfExtractor:
         
         return df
 
-                
 if __name__ == "__main__":
 
-    path_to_file = "./data/Economic_Twitter_Data.json"
-    file_exists = exists(path_to_file)
-
-    if not file_exists:
-        with ZipFile('./data/Economic_Twitter_Data.zip', 'r') as zipfile:
-            zipfile.extractall('./data')
+    extract_data_file()
 
     # required column to be generated you should be creative and add more features
     columns = ['created_at', 'source', 'original_text','clean_text', 'sentiment','polarity','subjectivity', 'lang', 'favorite_count', 'retweet_count', 
