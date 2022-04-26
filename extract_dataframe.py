@@ -115,7 +115,8 @@ class TweetDfExtractor:
 
         for tweet in self.tweets_list:
             try:
-                hashtags.append( tweet['entities']['hashtags'] )
+                hStringList = map(lambda x: '#'+ x['text'], tweet['entities']['hashtags']) 
+                hashtags.append( ' '.join(hStringList) )
             except KeyError:
                 hashtags.append( None )
 
