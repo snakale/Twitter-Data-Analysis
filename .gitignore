@@ -2,3 +2,4 @@ __pycache__/
 
 data/*.json
 processed_tweet_data.csv
+.ipynb_checkpoints
