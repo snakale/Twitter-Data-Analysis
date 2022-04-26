@@ -2,6 +2,8 @@ import json
 import re
 import pandas as pd
 from textblob import TextBlob
+from os.path import exists
+from zipfile import ZipFile
 
 def read_json(json_file: str)->list:
     """
@@ -184,6 +186,14 @@ class TweetDfExtractor:
 
                 
 if __name__ == "__main__":
+
+    path_to_file = "./data/Economic_Twitter_Data.json"
+    file_exists = exists(path_to_file)
+
+    if not file_exists:
+        with ZipFile('./data/Economic_Twitter_Data.zip', 'r') as zipfile:
+            zipfile.extractall('./data')
+
     # required column to be generated you should be creative and add more features
     columns = ['created_at', 'source', 'original_text','clean_text', 'sentiment','polarity','subjectivity', 'lang', 'favorite_count', 'retweet_count', 
     'original_author', 'screen_count', 'followers_count','friends_count','possibly_sensitive', 'hashtags', 'user_mentions', 'place', 'place_coord_boundaries']
