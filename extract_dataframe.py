@@ -99,7 +99,7 @@ class TweetDfExtractor:
 
         for tweet in self.tweets_list:
             try:
-                favourite_count.append( tweet['user']['favourite_count'] )
+                favourite_count.append( tweet['favorite_count'] )
             except KeyError:
                 favourite_count.append( None )
 
