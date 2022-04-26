@@ -140,9 +140,8 @@ class TweetDfExtractor:
         for tweet in self.tweets_list:
             try:
                 currentMentions = tweet['entities']['user_mentions']
-                for m in currentMentions:
-                    mString = ', '.join( map(lambda x: x['name'], tweet['entities']['user_mentions']) )
-                    mentions.append(mString)
+                mString = ', '.join( map(lambda x: '@' + x['screen_name'], currentMentions) )
+                mentions.append(mString)
                     
             except KeyError:
                 mentions.append(None)
