@@ -7,7 +7,17 @@ sys.path.append(os.path.abspath(os.path.join('../..')))
 from extract_dataframe import read_json
 from extract_dataframe import TweetDfExtractor
 
-_, tweet_list = read_json("data/covid19.json")
+from os.path import exists
+from zipfile import ZipFile
+
+path_to_file = "./data/Economic_Twitter_Data.json"
+file_exists = exists(path_to_file)
+
+if not file_exists:
+    with ZipFile('./data/Economic_Twitter_Data.zip', 'r') as zipfile:
+        zipfile.extractall('./data')
+
+_, tweet_list = read_json(path_to_file)
 
 columns = ['created_at', 'source', 'original_text','clean_text', 'sentiment','polarity','subjectivity', 'lang', 'favorite_count', 'retweet_count', 
     'original_author', 'screen_count', 'followers_count','friends_count','possibly_sensitive', 'hashtags', 'user_mentions', 'place', 'place_coord_boundaries']
