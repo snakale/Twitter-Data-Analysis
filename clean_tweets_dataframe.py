@@ -66,9 +66,9 @@ class Clean_Tweets:
         """
         
         df = self.df
+        
+        df = self.df[self.df['lang'].str.contains("en")]
 
-        df = df.query("lang == 'en' ")
-        
         self.df = df
-        
+
         return df
